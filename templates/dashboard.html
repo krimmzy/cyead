@@ -1,0 +1,430 @@
+
+{% load static %}
+
+{% if request.user.is_authenticated %}
+    {% if user.is_superuser %}
+        <header>
+            <img src="{% static 'images/logo.png' %}" alt="Logo">
+            <div class="header-text">CYEAD</div>
+                <div class="nav-links">
+                    <a href="{% url 'create_superuser' %}">Create Admin</a><br>
+                    <a href="{% url 'create_blog' %}">Write blog</a><br>
+                    <a href="{% url 'blog_list' %}">View Blogs</a><br>
+                    <a href="#sponsorss">Projects</a>
+                    <a href="#sponsors">Sponsors</a>
+                    <a href="#about">About</a>
+                    <a href="#apply">Apply</a>
+                    <a href="{% url 'logout' %}">Logout</a>
+
+                </div>
+                <div class="mobile-menu" onclick="toggleMenu()">☰</div>
+                <div class="dropdown">
+                    <a href="{% url 'create_superuser' %}">Create Admin</a><br>
+                    <a href="{% url 'create_blog' %}">Write blog</a><br>
+                    <a href="{% url 'blog_list' %}">View Blogs</a><br>
+                    <a href="#sponsorss">Projects</a>
+                    <a href="#sponsors">Sponsors</a>
+                    <a href="#about">About</a>
+                    <a href="#apply">Apply</a>
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+
+            <script>
+                function toggleMenu() {
+                    const menu = document.querySelector('.mobile-menu');
+                    menu.classList.toggle('open')
+                }
+            </script>
+        </header>
+
+    {% else %}
+
+    <header>
+        <img src="{% static 'images/logo.png' %}" alt="Logo">
+        <div class="header-text">CYEAD</div>
+            <div class="nav-links">
+                <a href="{% url 'blog_list' %}">View Blogs</a><br>
+                <a href="#sponsorss">Projects</a>
+                <a href="#sponsors">Sponsors</a>
+                <a href="#about">About</a>
+                <a href="#apply">Apply</a>
+                <a href="{% url 'logout' %}">Logout</a>
+
+            </div>
+            <div class="mobile-menu" onclick="toggleMenu()">☰</div>
+            <div class="dropdown">
+                <a href="{% url 'blog_list' %}">View Blogs</a><br>
+                <a href="#sponsorss">Projects</a>
+                <a href="#sponsors">Sponsors</a>
+                <a href="#about">About</a>
+                <a href="#apply">Apply</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+        </div>
+
+        <script>
+            function toggleMenu() {
+                const menu = document.querySelector('.mobile-menu');
+                menu.classList.toggle('open')
+            }
+        </script>
+    </header>
+
+    {% endif %}
+{% else %}
+<header>
+    <img src="{% static 'images/logo.png' %}" alt="Logo">
+    <div class="header-text">CYEAD</div>
+        <div class="nav-links">
+            <a href="{% url 'blog_list' %}">View Blogs</a><br>
+            <a href="#sponsorss">Projects</a>
+            <a href="#sponsors">Sponsors</a>
+            <a href="#about">About</a>
+            <a href="#apply">Apply</a>
+            <a href="{% url 'login' %}">Login</a>
+
+        </div>
+        <div class="mobile-menu" onclick="toggleMenu()">☰</div>
+        <div class="dropdown">
+            <a href="{% url 'blog_list' %}">View Blogs</a><br>
+            <a href="#sponsorss">Projects</a>
+            <a href="#sponsors">Sponsors</a>
+            <a href="#about">About</a>
+            <a href="#apply">Apply</a>
+            <a href="{% url 'login' %}">Login</a>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            menu.classList.toggle('open')
+        }
+    </script>
+</header>
+
+{% endif %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(to bottom, green, red);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: white;
+            color: green;
+        }
+
+        .header-text {
+            font-size: 20px;
+            font-weight: bolder;
+
+        }
+        
+        img{
+            width: 80px;
+            height: 80px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: green;
+            font-weight: bolder;
+            text-decoration: none;
+        }
+        .nav-links a:hover {
+            color: red;
+            text-decoration: solid;
+        }
+
+        .dropdown {
+            display: none;
+            flex-direction: column;
+            background-color: #444;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            width: 150px;
+            border-radius: 5px;
+        }
+
+
+        .dropdown a {
+            padding: 10px;
+            border-bottom: 1px solid #555;
+            text-decoration: none;
+            color: white;
+        }
+
+        .dropdown a:hover {
+            color: #2575fc;
+        }
+
+        .dropdown a:last-child{
+            border-bottom: none;
+        }
+
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+        }
+
+        @media(max-width:768px) {
+            .nav-links {
+                display: none;
+            }
+            .mobile-menu {
+                display: block;
+            }
+            .mobile-menu.open ~ .dropdown {
+                display: flex;
+            }
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 40px;
+        }
+
+
+
+        #projects {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+
+        #projects ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        #sponsors {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        #sponsors .sponsor {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+
+        #sponsors .sponsor p {
+            margin: 5px 0;
+        }
+
+
+
+        #sponsorss {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        #sponsorss .sponsorr {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-align: center;
+            color: gray;
+            background-color: black;
+        }
+
+        #sponsorss .sponsorr p {
+            margin: 5px 0;
+        }
+
+
+        .form-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .form-section h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-section form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-section form input,
+        .form-section form textarea,
+        .form-section form select,
+        .form-section form button {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: black;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        h3{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            margin-bottom: 5px;
+            font-weight: bolder;
+        }
+
+        #about {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #contact {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{ user.username }}!</h1>
+    <main>
+
+        <section id="about">
+            <h2>About CYEAD</h2>
+            <p>Our NGO is dedicated to bridging the gap between technology and communities, ensuring growth and sustainability for underprivileged areas.
+            CYEAD is a non-profit organization dedicated to providing educational opportunities to deserving students worldwide. Our Mission
+            is to bridge the financial gap between talented individuals and their academic aspirations, fostering a community of leaders who will shape the future.
+            </p>
+        </section>
+
+        <h3>Sponsors</h3>
+        <section id="sponsors" class="sponsors">
+            
+            <div class="sponsor">
+                <p><strong>Sponsor 1</strong></p>
+                <p>Company A</p>
+            </div>
+            <div class="sponsor">
+                <p><strong>Sponsor 2</strong></p>
+                <p>Company B</p>
+            </div>
+            <div class="sponsor">
+                <p><strong>Sponsor 3</strong></p>
+                <p>Company C</p>
+            </div>
+            <div class="sponsor">
+                <p><strong>Sponsor 4</strong></p>
+                <p>Company D</p>
+            </div>
+            <div class="sponsor">
+                <p><strong>Sponsor 5</strong></p>
+                <p>Company E</p>
+            </div>
+            <div class="sponsor">
+                <p><strong>Sponsor 6</strong></p>
+                <p>Company F</p>
+            </div>
+        </section>
+
+
+
+        <h3>Projects</h3>
+        <section id="sponsorss" class="sponsorss">
+            
+            <div class="sponsorr">
+                <p><strong>Project 1</strong></p>
+                <p>Project A</p>
+            </div>
+            <div class="sponsorr">
+                <p><strong>Project 2</strong></p>
+                <p>Project B</p>
+            </div>
+            <div class="sponsorr">
+                <p><strong>Project 3</strong></p>
+                <p>Project C</p>
+            </div>
+            <div class="sponsorr">
+                <p><strong>Project 4</strong></p>
+                <p>Project D</p>
+            </div>
+            <div class="sponsorr">
+                <p><strong>Project 5</strong></p>
+                <p>Project E</p>
+            </div>
+            <div class="sponsorr">
+                <p><strong>Project 6</strong></p>
+                <p>Project F</p>
+            </div>
+        </section>
+
+
+        <section class="form-section" id="apply">
+            <h3>Scholarship Application Form</h3>
+            <form>
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email Address" required>
+                <input type="text" placeholder="Phone Number" required>
+                <textarea placeholder="Why do you deserve this scholarship?" rows="5" required></textarea>
+                <select required>
+                    <option value="" disabled selected>Select Scholarship Type</option>
+                    <option value="undergraduate">Undergraduate</option>
+                    <option value="postgraduate">Postgraduate</option>
+                </select>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; CYEAD. All rights reserved.</p>
+        <section id="contact">
+            <p>Email: info@ourngo.org</p>
+            <p>Phone: +123 456 7890</p>
+        </section>
+    </footer>
+</body>
+</html>
